@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Bridge</title>
+    <meta http-equiv="refresh" content="30"/>
+    <link rel="stylesheet" type="text/css" href="files/style.css">
+  </head>
+  <body>
+    <div class="field">
+      <h1>BRIDGE</h1>
+      <div id="working">
+         <h2>Server is running</h2>
+      </div>
+      {{ if . }}
+      <div id="received">
+        {{ range . }}
+        <p>{{ . }}</p>
+        {{ end }}
+      </div>
+      {{ end }}
+  
+      <div id="builtin">
+      <button class="clbut" onclick="window.location.href='http://localhost:'+window.location.port+'/text'" target="_blank">TEXT</button>
+      <button class="clbut" onclick="window.location.href='http://localhost:'+window.location.port+'/files'" target="_blank">FILES</button>
+      </div>
+      <div class="sfield">
+        <button id="quit" onclick="window.location.href='http://localhost:'+window.location.port+'/quit'" target="_self">✘</button>
+      </div>
+    </div>
+  </body>
+</html>

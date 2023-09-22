@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1024, user-scalable=yes">
+    <title>Client</title>
+    <link rel="stylesheet" type="text/css" href="files/style.css">
+  </head>
+  <body>
+    <div class="field">
+      <h1>RESULT</h1>
+      {{ range . }}
+      <p class="message">{{ . }}</p>
+      {{ end }}
+    </div>
+    <div class="sfield">
+      <button id="quit" onclick="window.location.href='http://localhost:'+window.location.port" target="_self">🏠</button>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1024, user-scalable=yes">
+    <title>Links</title>
+    <link rel="stylesheet" type="text/css" href="files/style.css">
+  </head>
+  <body>
+    <div class="sfield">
+      <a onclick="href='http://localhost:'+window.location.port"><img src="files/home-green.png" width="102px"/></a>
+    </div>
+    
+    <div class="field">
+      {{ range . }}
+      <p class="source">{{ .Source }}</p>
+      <p class="lview"><a href={{ .Url }} target="_blank">{{ .Title }}</a></p>
+      {{ end }}
+      
+      <div class="sfield">
+        <button id="quit" onclick="window.location.href='http://localhost:'+window.location.port+'/quit'" target="_self">✘</button>
+      </div>
+    </div>
+  </body>
+</html>

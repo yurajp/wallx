@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="static/createSite.css">
+    <title>create</title>
+  </head>
+  <body>
+    <base target="_self">
+    <h3>Add card</h3>
+    <div class="mistake">
+      {{ . }}
+    </div>
+    <div class="create">
+      <form method="POST">
+        <label for="name">Card name</label><br>
+        <input id="name" type="text" name="name"><br>
+        <label for="number">Card number</label><br>
+        <input id="number" type="text" name="number"><br>
+        <label for="month">Expire</label><br>
+      <div class="date">
+        <input id="month" type="text" name="month"> / <input id="year" type="text" name="year"><br>
+      </div>
+        <label for="cvc">CVC</label><br>
+        <input id="cvc" type="text" name="cvc"><br>
+        <br>
+        <input id="button" type="submit">
+      </form>
+    </div>
+  </div>
+  <div class="top">
+    <a href="http://localhost:8686/home">🏠</a>
+  </div>
+  </body>
+</html>

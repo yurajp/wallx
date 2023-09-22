@@ -1,0 +1,96 @@
+#delete {
+  display: block;
+	width: 2.0em;
+	background-color: firebrick;
+	margin: 30px 160px;
+	padding: 1.0rem;
+	border-radius: 40px;
+	text-align: center;
+}
+#delete a {
+  color: white;
+	font-size: 2.0em;
+	font-family: Sans-Serif;
+	text-decoration: none;
+	font-weight: bold;
+}
+.site {
+	display: block;
+	margin: 60px 80px;
+	padding: 30px 80px 60px 80px;
+	background-color: white;
+	font-family: sans-serif;
+	color: darkslategrey;
+	border: 2px solid gray;
+	border-radius: 40px;
+}
+
+.site h4 {
+	color: darkslateblue;
+	font-size: 2.0em;
+}
+
+.site a {
+  margin-top: 30px;
+	color: darkslateblue;
+	font-size: 1.4em;
+	text-decoration: none;
+}
+
+.site p {
+  font-size: 1.2em;
+  padding-left: 20px;
+}
+.del {
+  margin: 60px;
+  font-size: 2.0em;
+}
+#cpl {
+  margin: 15px 10px;
+  padding: 10px;
+  font-size: 1.4em;
+}
+#cpp {
+  margin: 15px 10px;
+  padding: 10px;
+  font-size: 1.4em;
+}
+#log {
+  margin: 15px 10px;
+  padding: 10px;
+  font-size: 1.4em;
+}
+#pas {
+  margin: 15px 10px;
+  padding: 10px;
+  font-size: 1.4em;
+}
+#whom {
+  width: 400px;
+  margin: 15px 10px;
+  font-size: 1.2em;
+  padding: 10px;
+}
+.top {
+  display: block;
+  width: 48px;
+  margin: 80px auto;
+}
+.top a {
+  text-align: center;
+  font-size: 2.4em;
+}
+
+.message {
+	display: block;
+	margin: 100px 240px;
+	padding: 80px;
+	background-color: linen;
+	border 2px solid gray;
+	border-radius: 25px;
+}
+.message p {
+	font_size: 2.2em;
+	font-weight: 600;
+	color: black;
+}

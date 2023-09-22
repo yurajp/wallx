@@ -1,0 +1,65 @@
+body {
+	background: darkslategrey;
+}
+
+h1 {
+  font-size: 2.8em;
+  background-color: darkslategrey;
+	text-align: center;
+	padding: 30px;
+	margin-top: 180px;
+	color: linen;
+}
+
+.choice {
+
+	margin: 40px 80px;
+  display: flex;
+  justify-content: space-around;
+  padding-bottom: 100px;
+}
+
+.chapter {
+	display: block;
+	background-color: dimgray;
+	margin-top: 6rem;
+	width: 10rem;
+	padding: 2rem;
+	border: 2px solid grey;
+	border-radius: 35px;
+	text-align: center;
+	color: #31363b;
+}
+.chapter a {
+	text-decoration: none;
+	font-size: 1.6em;
+	font-weight: 600;
+	color: linen;
+}
+
+#utils {
+	display: block;
+	margin: 24px 100px;
+}
+
+#utils p {
+	text-align: center;
+}
+
+#utils a {
+	text-decoration: none;
+	color: linen;
+	font-size: 1.6em;
+}
+
+.top {
+  display: block;
+  width: 48px;
+  margin: 20px auto;
+}
+.top a {
+  text-align: center;
+  font-size: 3.6em;
+  text-decoration: none;
+  color: cyan;
+}

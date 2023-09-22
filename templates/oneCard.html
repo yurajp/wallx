@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="33">
+    <link rel="stylesheet" type="text/css" href="static/oneSite.css">
+    <title>card</title>
+  </head>
+  <body>
+    <base target="_self">
+    <script type="text/javascript">
+      function cpLog() {
+        var cpl = document.getElementById("log");
+        cpl.select();
+        cpl.setSelectionRange(0, 9999);
+        document.execCommand("copy");
+      }
+    document.querySelector("#cpl").AddEventListener("click", cpLog);
+    
+      function cpPas() {
+        var cpp = document.getElementById("pas");
+        cpp.select();
+        cpp.setSelectionRange(0, 9999);
+        document.execCommand("copy");
+        
+      }
+    document.querySelector("#cpp").AddEventListener("click", cpPas);
+  </script>
+    <div class="site">
+      <h4>{{ .Name }}</h4>
+      <input type="text" id="log" value={{ .Number }}><button id="cpl" onclick="cpLog()">☰</button>
+    <br>
+      <p>{{ .Expire }}</p>
+    <input type="text" id="pas" value={{ .Cvc }}><button id="cpp" onclick="cpPas()">☰</button>
+    <br><br>
+    </div>
+    <div id="delete">
+        <a href='http://localhost:8686/deleteCard?name="{{ .Name }}"'>x</a>    
+    </div>
+  </div>
+  <div class="top">
+    <a href="http://localhost:8686/home">🏠</a>
+  </div>
+  </body>
+</html>

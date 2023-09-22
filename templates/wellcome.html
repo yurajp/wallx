@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="static/wellcome.css">
+    <title>Wellcome</title>
+  </head>
+  <body>
+    <base target="_self">
+    <h1>WALLAP</h1>
+    {{ if . }}
+
+    <div class="wellcome">
+      <form method="POST">
+        <input class="word" type="password" name="word" placeholder="Password">
+      </form>
+    </div>
+    {{ else }}
+    <div id="hello">
+      <p>Please set password for safe usage of program.</p>
+      <p>Notice: NO way to recover this password,  program doesn't remember it!</p>
+    </div>
+    <div class="wellcome">
+      <form method="POST">
+        <label for="p1">Type your password</label><br>
+         <input class="word" id="p1" type="password" name="word1"><br>
+         <label for="p2">Password once more</label>
+         <br>
+         <input id="p2" class="word" type="password" name="word2"><br>
+         <br>
+         <input id="button" type="submit"><br>
+      </form>
+    </div>
+    {{ end }}
+    </div>
+  </body>

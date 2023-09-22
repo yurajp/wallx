@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="30">
+    <link rel="stylesheet" type="text/css" href="static/oneSite.css">
+    <title>card</title>
+  </head>
+  <body>
+    <base target="_self">
+
+    <div class="site">
+      <h4>Паспорт РФ</h4>
+      <br>
+    <input type="text" id="log" value={{ .SerialNum }}>
+      <br>
+      <p>выдан</p>
+    <input type="text" id="log" value={{ .Date }}>
+      <br>
+    <input type="text" id="whom" value={{ .Whom }}>
+      <br>
+    <p>код подразделения</p>
+    <input type="text" id="log" value={{ .Code }}>
+      <br>
+    </div>
+  
+  </div>
+  <div class="top">
+    <a href="http://localhost:8686/home">🏠</a>
+  </div>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+h3 {
+	text-align: center;
+	margin-top:80px;
+	color: darkslateblue;
+	font-family: sans-serif;
+	font-size: 2.6rem;
+}
+.mistake {
+  display: block;
+  padding: 10px 40px;
+  color firebrick;
+  font-size: 1.2rem;
+}
+.create {
+	display: block;
+	margin: 60px 60px;
+	padding: 40px 60px;
+}
+.create input {
+	font-size: 1.6rem;
+	font-family: sans-serif;
+	margin:10px;
+	padding: 15px 25px;
+	background-color: darkslategrey;
+}
+.create label {
+	font-family: sans-serif;
+	padding: 20px;
+	margin-top: 30px;
+	font-size: 2.0rem;
+	
+}
+#button {
+	font-size: 1.0rem;
+	background: firebrick;
+  border-radius: 30px;
+}
+.date {
+  display: flex;
+}
+#month {
+  width: 50px;
+}
+#year {
+  width: 50px;
+}
+#cvc {
+  width: 80px;
+}
+.top {
+  display: block;
+  width: 48px;
+  margin: 80px auto;
+}
+.top a {
+  text-align: center;
+  font-size: 3.0em;
+}

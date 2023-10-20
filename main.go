@@ -1,7 +1,6 @@
 package main
 
 import (
-  "fmt"
   "time"
   "os"
   "os/exec" 
@@ -10,33 +9,39 @@ import (
   "github.com/yurajp/bridge/server"
   "github.com/yurajp/bridge/client"
   "github.com/yurajp/bridge/web"
+  "github.com/sirupsen/logrus"
 )
 
+var log *logrus.Logger
 
-func iserr(err error) bool {
+func iserr(s string, err error) bool {
   if err != nil {
-    fmt.Println(err)
+    log.WithError(err).Error(s)
     return true
   }
   return false
 }
 
 func main() {
+	log = logrus.New()
+	log.Formatter = new(logrus.TextFormatter)
+	log.Level = logrus.InfoLevel
+	log.Out = os.Stdout
   exec.Command("termux-wifi-enable", "true").Run()
   err := config.LoadConf()
-  if iserr(err) {
+  if iserr("Cannot enable wi-fi", err) {
     return
   }
   if len(os.Args) > 1 && os.Args[1] == "sync" {
-    fmt.Println("\n\tSYNC DB")
+    log.Info("SYNC DB")
     err = database.SyncerDb()
-    if iserr(err) {
+    if iserr("Cannot sync DB", err) {
       return
     }
     return
   }
   err = database.PrepareDb()
-  if iserr(err) {
+  if iserr("PrepareDB failed", err) {
     return
   }
   go web.Launcher()
@@ -46,43 +51,41 @@ func main() {
     case mode := <-web.Cmode:
       if mode == "server" {
         go server.AsServer()
-        fmt.Println("\n\t BRIDGE server running\n")
       } 
       if mode == "text" {
         go func() {
-          fmt.Println("\n\t TEXT")
+          log.Info("Sending text")
           err := client.AsClient("text")
-          if err != nil {
-            fmt.Println(err)
+          if iserr("Client for text failed", err) {
+            return
           }
         }()
       }
       if mode == "files" {
         go func() {
-          fmt.Println("\n\t FILES")
+          log.Info("Sending files")
           err := client.AsClient("files")
-          if err != nil {
-            fmt.Println(err)
+          if iserr("Client for files failed", err) {
+            return
           }
         }()
       }
       if mode == "config" {
         err := config.TerminalConfig()
-        if err != nil {
-          fmt.Println(err)
+        if iserr("Config failed", err) {
+          return
         }
       }
       if mode == "migrate" {
         err := database.MigratePgToSqlt()
-        if err != nil {
-          fmt.Println(err)
+        if iserr("Migration failed", err) {
+          return
         }
       }
     case <-web.Q:
       break Main
-  //
     }
   }
-  fmt.Println("\t CLOSED")
+  log.Info("BRIDGE CLOSED")
   time.Sleep(3 * time.Second)
 }

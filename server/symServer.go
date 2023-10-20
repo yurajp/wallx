@@ -68,7 +68,7 @@ func GetText(conn net.Conn, pw string) {
   defer conn.Close()
   msg := "OK"
   printer := func(m string, err error) {
-    fmt.Printf("%s: %s", msg, err)
+    log.WithError(err).Error(m)
   }
   send := func(m string) {
     conn.Write([]byte(msg))
@@ -114,7 +114,7 @@ func GetText(conn net.Conn, pw string) {
 	    fmt.Println(m, err)
 	  }
 	  tw := "@ A letter was received and stored"
-    fmt.Println(tw)
+    log.Info(tw)
     toWeb(tw)
 	}()
 	
@@ -130,10 +130,10 @@ func GetText(conn net.Conn, pw string) {
 	    sfx = " is"
 	  }
 	  tw2 := fmt.Sprintf(" @ %d link%s stored", sfx, x)
-	  fmt.Println(tw2)
+	  log.Info(tw2)
 	  toWeb(tw2)
 	} else {
-	  fmt.Println(" No links")
+	  log.Warn(" No links")
 	}
 	send("OK")
 }
@@ -149,7 +149,7 @@ func GetFiles(conn net.Conn) {
 	}
 	
 	printer := func(m string, err error) {
-	  fmt.Printf("%s: %s\n", m, err)
+	  log.WithError(err).Error(m)
 	}
 	msg := ""
 	for {
@@ -174,7 +174,7 @@ func GetFiles(conn net.Conn) {
 		}
 		send("ok")
 		
-		fmt.Printf("\n\t Downloading %s (%s)\n", u.Fname, anyBytes(u.Fsize))
+		log.Infof("\n\t Downloading %s (%s)\n", u.Fname, anyBytes(u.Fsize))
 		dname := fdir + "/" + u.Fname
 		data := make([]byte, 0)
 		
@@ -230,12 +230,12 @@ func GetFiles(conn net.Conn) {
 		  	unz := exec.Command("unzip", u.Fname)
 		  	err = unz.Run()
 		  	if err != nil {
-		  		fmt.Println("\n\t Cannot unzip file")
+		  		printer("Cannot unzip file", err)
 		  	}
 		  	rmz := exec.Command("rm", u.Fname)
 		  	err = rmz.Run()
 		  	if err != nil {
-		  		fmt.Println("\n\t Cannot delete zipfile")
+		  		printer("Cannot delete zipfile", err)
 		  	}
 		  	os.Chdir(wdr)
 		}
@@ -246,7 +246,7 @@ func GetFiles(conn net.Conn) {
 		req := make([]byte, 128)
 		i, err := conn.Read(req[:]) 
 		if err != nil {
-			fmt.Println(err)
+			printer("Cannot read request", err)
 			return
 		}
 		count++
@@ -260,6 +260,6 @@ func GetFiles(conn net.Conn) {
 	if count == 1 {
 		ss = ""
 	}
-	fmt.Printf("\n\n\t%d file%s downloaded\n ", count, ss)
+	log.Infof("%d file%s downloaded\n ", count, ss)
 }
 

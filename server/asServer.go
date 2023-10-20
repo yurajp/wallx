@@ -2,12 +2,12 @@ package server
 
 import (
 	"encoding/json"
-	"fmt"
+	"os"
 	"net"
 	"github.com/yurajp/bridge/config"
   "github.com/yurajp/bridge/ascod"
   "github.com/yurajp/bridge/symcod"
-  
+  "github.com/sirupsen/logrus"
 )
 
 type KeyResp struct {
@@ -20,46 +20,56 @@ type PassMode struct {
   Mode string
 }
 
-var port string
+var (
+	log *logrus.Logger
+  port string
+  Shutdown = make(chan struct{}, 1)
+)
+
+func iserr(s string, err error) bool {
+	if err != nil {
+		log.WithError(err).Error(s)
+		return true
+	}
+	return false
+}
 
 func SecureHandle(conn net.Conn) {
   // getting client random
 	rndBuf := make([]byte, 512)
 	n, err := conn.Read(rndBuf[:])
-	if err != nil {
-		fmt.Printf("cannot read random: %s", err)
+	if iserr("Cannot read random", err) {
 		return
 	}
 	rand := string(rndBuf[:n])
 	// generating keys 
 	pub, priv, err := ascod.GenerateKeys()
-	if err != nil {
-		fmt.Printf("cannot generate keys: %s", err)
+	if iserr("Cannot generate keys", err) {
 		return
 	}
 	// create KeyResp for client
 	kRs := ascod.NewKeyResp(rand, pub, priv)
 	// sending KeyResp json
 	js, err := json.Marshal(kRs)
-	if err != nil {
-		fmt.Printf("cannot convert keyResp: %s", err)
+	if iserr("Cannot convert keyResp", err) {
 		return
 	}
 	_, er := conn.Write(js)
-	if er != nil {
-		fmt.Printf("cannot send keyResp: %s", er)
+	if iserr("Cannot send keyResp", er) {
 		return
 	}
 	// getting struct with encrypted password for symmetric encoding and /
 	// mode (files|text) encrypted by this password
 	passMdBuf := make([]byte, 1024)
 	m, err := conn.Read(passMdBuf[:])
-	if err != nil {
-		fmt.Printf("cannot receive passMode: %s", err)
+	if iserr("Cannot receive passMode", err) {
 		return
 	}
 	var encPM PassMode
 	err = json.Unmarshal(passMdBuf[:m], &encPM)
+	if iserr("Cannot unmarshal pass", err) {
+		return
+	}
 	// handling the struct and getting password and mode
 	decPwd := ascod.SrvDecodeString(encPM.Password, priv)
 	mode := symcod.SymDecode(encPM.Mode, decPwd)
@@ -79,22 +89,27 @@ func SecureHandle(conn net.Conn) {
 }	
 	
 func AsServer() { 
+	log = logrus.New()
+	log.Formatter = new(logrus.TextFormatter)
+	log.Level = logrus.InfoLevel
+	log.Out = os.Stdout
   port = config.Conf.Server.Port
 	listen, err := net.Listen("tcp", port)
-	if err != nil {
-		fmt.Printf("Failed to establish connection: %s\n", err)
+	if iserr("Failed to establish connection", err) {
+		return
 	}
-	fmt.Printf("\n    SERVER started on %s\n ", port)
+	log.Infof("TCP server started on %s", port)
+  TCP:
 	for {
-	  // select {
-	  // case <-stop:  
-	  //   break
-	  // default:
-		conn, err := listen.Accept()
-		if err != nil {
-			fmt.Printf("connection failed ...continue...\n")
-			continue
-		}
-		go SecureHandle(conn)
+	  select {
+	  case <-Shutdown:  
+	    break TCP
+    default:
+		  conn, err := listen.Accept()
+		  if iserr("Connection failed ...continue...\n", err) {
+			  continue
+		  }
+		  go SecureHandle(conn)
+	  }
 	}
 }

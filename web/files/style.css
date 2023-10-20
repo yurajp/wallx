@@ -2,22 +2,22 @@ html {
     -webkit-text-size-adjust : none;
     text-size-adjust         : none;
     font-size: 2.0em;
+    background-color: antiquewhite;
 }
 
 .field {
   display: block;
-  margin: 60px 60px;
-  padding: 100px 80px;
-  background: seashell;
-  border: 6px solid darkgray;
+  margin: 48px 60px;
+  padding: 64px 80px;
+  background-image: url("whitewall.jpg");
   border-radius: 128px;
-  box-shadow: 2px 6px 4px silver;
+  box-shadow: 2px 4px 12px steelblue;
 }
 
 .field h1 {
   text-align: center;
   font-size: 80px;
-  color: gray;
+  color: steelblue;
   font-family: sans;
 }
 .sfield {
@@ -26,50 +26,61 @@ html {
   padding: 60px;
   justify-content: center;
 }
-
+#logo {
+  margin: -70px 0px;
+  display: block;
+  width: 256px;
+}
+#pic {
+  display: block;
+  width: 240px;
+}
 .builtin {
   display: flex;
-  margin: 100px 10px;
-  padding: 80px;
+  margin: 82px 10px;
+/*  padding: 80px;*/
   justify-content: space-between;
 }
 
 #server {
   text-align: center;
-  padding: 40px 120px;
-  font-size: 1.4rem;
+  padding: 30px 120px;
+  font-size: 1.5rem;
+  font-family: 'Kanit', sans;
   color: white;
-  background-color: darkslategray;
+  background-color: teal;
   border: 1px solid gray;
   border-radius: 160px;
-  box-shadow: 2px 6px 4px silver;
+  box-shadow: 2px 4px 16px gray;
+  box-shadow: inset 1px 2px 48px rgba(255, 255, 255, 0.8);
 }
 
 .clbut {
   display: inline-block;
-  margin: 50px;
-  padding: 30px 60px;
+  margin: 60px 40px;
+  padding: 20px 65px;
   text-align: center;
-  font-size: 1.2rem;
-  background-color: darkslategray;
+  font-size: 1.3rem;
+  font-family: 'Kanit', sans;
+  background-color: steelblue;
   color: white;
   border: 1px solid gray;
   border-radius: 60px;
-  box-shadow: 2px 6px 4px silver;
+  box-shadow: 2px 4px 16px gray;
+  box-shadow: inset 1px 2px 42px rgba(255, 255, 255, 0.8);
 }
 
 #working {
   display: block;
-  margin: 100px 10px;
-  padding: 18px 40px;
-  background-color: darkgreen;
-  opacity: 0.8;
-  border: 1px solid gray;
-  border-radius: 36px;
+  margin: 75px 24px 36px 24px;
+  padding: 12px 24px;
+  background-color: steelblue;
+  border-radius: 64px;
+  box-shadow: 2px 4px 12px gray;
 }
 #working h2 {
   text-align: center;
-  font-size: 1.4rem;
+  font-size: 1.8rem;
   color: white;
 }
 
@@ -108,15 +119,18 @@ html {
 
 .links {
   display: block;
-  margin: 60px;
-  padding: 30px 60px;
+  margin: 20px;
+  padding: 20px 65px;
   text-align: center;
-  font-size: 30px;
+  font-size: 1.3rem;
+  font-size: 1.3rem;
+  font-family: 'Kanit', sans;
   background-color: purple;
   color: white;
   border: 1px solid gray;
   border-radius: 60px;
-  box-shadow: 2px 6px 4px silver;
+  box-shadow: 2px 4px 16px gray;
+  box-shadow: inset 1px 2px 32px rgba(255, 255, 255, 0.8);
 }
 
 .field h3 {
@@ -153,4 +167,23 @@ html {
   font-family: serif;
   text-decoration: none;
   color: black;
+}
+
+#closed {
+  display: block;
+  margin: 160px 42px;
+  padding: 20px 30px;
+  background-color: steelblue;
+  border-radius: 60px;
+}
+#closed h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  color: white;
+}
+#tiny {
+  display: flex;
+  justify-content: center;
+  margin-top: -48px;
+  
 }

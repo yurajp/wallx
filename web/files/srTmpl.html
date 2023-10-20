@@ -8,9 +8,17 @@
   </head>
   <body>
     <div class="field">
+      <div class="sfield">
+        <div id="logo">
+          <img src="files/dolphin.png" width=256px>
+        </div>
+      </div>
       <h1>BRIDGE</h1>
       <div id="working">
          <h2>Server is running</h2>
+      </div>
+      <div id="tiny">
+         <img src="files/stop.png" width=200px onclick="window.location.href='http://localhost:'+window.location.port+'/stop'" target="_blank">
       </div>
       {{ if . }}
       <div id="received">
@@ -25,7 +33,12 @@
       <button class="clbut" onclick="window.location.href='http://localhost:'+window.location.port+'/files'" target="_blank">FILES</button>
       </div>
       <div class="sfield">
-        <button id="quit" onclick="window.location.href='http://localhost:'+window.location.port+'/quit'" target="_self">✘</button>
+        <button class="links" onclick="window.location.href='http://localhost:'+window.location.port+'/links'" target="_blank">LINKS</button>
+      </div>
+      <div class="sfield">
+        <div id="pic" onclick="window.location.href='http://localhost:'+window.location.port+'/quit'" target="_self">
+          <img src="files/exit-green.png" width=240px>
+        </div>
       </div>
     </div>
   </body>

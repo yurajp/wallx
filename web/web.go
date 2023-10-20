@@ -3,6 +3,7 @@ package web
 import (
   "net/http"
   "html/template"
+  "os"
   "os/exec"
   "fmt"
   "embed"
@@ -13,6 +14,7 @@ import (
   "github.com/yurajp/bridge/client"
   "github.com/yurajp/bridge/server"
   "github.com/yurajp/bridge/database"
+  "github.com/sirupsen/logrus"
 )
 
 var (
@@ -28,6 +30,7 @@ var (
   Cmode = make(chan string, 1)
   Q = make(chan struct{}, 1)
   SrvUp bool
+  log *logrus.Logger
 )
 
 
@@ -39,6 +42,18 @@ func init() {
   blTmpl, _ = template.ParseFS(webDir, "files/blank.html")
   lkTmpl, _ = template.ParseFS(webDir, "files/linkQuery.html")
   lvTmpl, _ = template.ParseFS(webDir, "files/linkView.html")
+  log = logrus.New()
+  log.Level = logrus.InfoLevel
+  log.Formatter = new(logrus.TextFormatter)
+  log.Out = os.Stdout
+}
+
+func iserr(s string, err error) bool {
+	if err != nil {
+		log.WithError(err).Error(s)
+		return true
+	}
+	return false
 }
 
 func home(w http.ResponseWriter, r *http.Request) {
@@ -89,13 +104,11 @@ func linkView(w http.ResponseWriter, r *http.Request) {
   }
   if r.Method == http.MethodPost {
     err := r.ParseForm()
-    if err != nil {
-      fmt.Println(err)
+    if iserr("Cannot parse form", err) {
       http.Error(w, err.Error(), http.StatusBadRequest)
     }
     lview, err := database.MakeView()
-    if err != nil {
-      fmt.Println(err)
+    if iserr("Cannot make view in DB", err) {
       http.Error(w, err.Error(), http.StatusInternalServerError)
     }
     val := r.FormValue("query")
@@ -120,8 +133,7 @@ func linkView(w http.ResponseWriter, r *http.Request) {
 
 func quit(w http.ResponseWriter, r *http.Request) {
   err := blTmpl.Execute(w, "Bridge closed")
-  if err != nil {
-    fmt.Println(err)
+  if iserr("Cannot execute blank template", err) {
   }
   Q <-struct{}{}
 }
@@ -130,6 +142,7 @@ func Launcher() {
   mux := http.NewServeMux()
   mux.HandleFunc("/", home)
   mux.HandleFunc("/server", serverLauncher)
+  mux.HandleFunc("/stop", stopServer)
   mux.HandleFunc("/text", textLauncher)
   mux.HandleFunc("/files", filesLauncher)
   mux.HandleFunc("/links", linkView)
@@ -139,7 +152,14 @@ func Launcher() {
   
   go hsrv.ListenAndServe()
   err := exec.Command("xdg-open", "http://localhost:" + config.Conf.WebPort).Run()
-  if err != nil {
-    fmt.Println("xdg-open: ", err)
+  if iserr("xdg-open error", err) {
   }
+  log.Infof("BRIDGE running on %s", config.Conf.WebPort)
+}
+
+func stopServer(w http.ResponseWriter, r *http.Request) {
+  server.Shutdown <-struct{}{}
+  SrvUp = false
+  log.Info("TCP server stopped")
+  http.Redirect(w, r, "/", 302)
 }

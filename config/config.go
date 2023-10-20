@@ -6,6 +6,12 @@ import (
   "fmt"
 )
 
+func init() {
+	if wd, err := os.Getwd(); err == nil {
+	  APPDIR = wd
+	}
+}
+
 type Config struct {
   Appdir string `json:"appdir"`
   Server Srv `json:"server"`
@@ -46,18 +52,19 @@ type Dbs struct {
 }
 
 var (
+	APPDIR string
   STORAGE = "/storage/emulated/0/"
   TERMUXDIR = "/data/data/com.termux/files/home/"
 )
 
-var DefaultConf = Config{Appdir: TERMUXDIR + "golangs/bridge-mobile",
+var DefaultConf = Config{Appdir: APPDIR,
   Server: Srv{Port: ":4646",
     TxtDir: STORAGE + "BridgeTexts",
     FileDir: STORAGE + "BridgeFiles"},
   Client: Clt{Addr: "192.168.1.38:4545",
     TxtFile: STORAGE + "pc.txt",
     FileDir: STORAGE + "Uploads"},
-  Db: Dbs{SqltPath: TERMUXDIR + "golangs/bridge-mobile/database/bridge.db",
+  Db: Dbs{SqltPath: APPDIR + "/database/bridge.db",
     SqltTable: "links",
     PgHost: "localhost",
     PgPort: "5432",
@@ -75,7 +82,7 @@ var DefaultConf = Config{Appdir: TERMUXDIR + "golangs/bridge-mobile",
 var Conf Config
 
 func LoadConf() error {
-  path := TERMUXDIR + "golangs/bridge-mobile/config/config.json"
+  path := APPDIR + "/config/config.json"
   if _, err := os.Stat(path); err != nil {
     if os.IsNotExist(err) {
       er := TerminalConfig()
@@ -149,4 +156,3 @@ func TerminalConfig() error {
   
   return WriteConf(cf)
 }
-

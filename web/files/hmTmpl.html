@@ -4,9 +4,17 @@
     <meta charset="UTF-8">
     <title>Bridge</title>
     <link rel="stylesheet" type="text/css" href="files/style.css">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
   </head>
   <body>
     <div class="field">
+      <div class="sfield">
+        <div id="logo">
+          <img src="files/dolphin.png" width=256px>
+        </div>
+      </div>
       <h1>BRIDGE</h1>
       <div class="sfield">
       <button id="server" onclick="window.location.href='http://localhost:'+window.location.port+'/server'" target="_self">SERVER</button>
@@ -15,11 +23,14 @@
       <button class="clbut" onclick="window.location.href='http://localhost:'+window.location.port+'/text'" target="_blank">TEXT</button>
       <button class="clbut" onclick="window.location.href='http://localhost:'+window.location.port+'/files'" target="_blank">FILES</button>
       </div>
+
       <div class="sfield">
         <button class="links" onclick="window.location.href='http://localhost:'+window.location.port+'/links'" target="_blank">LINKS</button>
       </div>
       <div class="sfield">
-        <button id="quit" onclick="window.location.href='http://localhost:'+window.location.port+'/quit'" target="_self">✘</button>
+        <div id="pic" onclick="window.location.href='http://localhost:'+window.location.port+'/quit'" target="_self">
+          <img src="files/exit-green.png" width=240px>
+        </div>
       </div>
     </div>
   </body>
